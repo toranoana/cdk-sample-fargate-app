@@ -1,0 +1,43 @@
+name: sample-fargate-app
+
+services:
+  api:
+    build:
+      context: ./api
+      target: base
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - DATABASE_USER=user
+      - DATABASE_PASSWORD=pass
+      - DATABASE_HOST=db
+      - DATABASE_NAME=dev
+  page:
+    build:
+      context: ./page
+    ports:
+      - ${PAGE_PORT:-3000}:3000
+    environment:
+      - API_URL=http://api:3000/api/samples
+  db:
+    image: mysql:8.0
+    command:
+      - mysqld
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_bin
+    volumes:
+      - mysql-data:/var/lib/mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_DATABASE=dev
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=pass
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  mysql-data:
