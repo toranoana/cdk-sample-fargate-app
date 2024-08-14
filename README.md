@@ -12,7 +12,7 @@ npm run cdk -- bootstrap
 
 # リソース作成
 
-1. .envファイルの用意
+1. (省略可).envファイルの用意
 ```shell
 cp .env.sample .env
 ```
