@@ -1,4 +1,4 @@
-(TODO: ブログのリンク)で紹介しているコードです。
+ブログ記事[本番で使えるFargate環境構築をCDKでやってみる](https://toranoana-lab.hatenablog.com/entry/2024/08/15/130000)で紹介しているコードです。
 
 # 事前準備
 
